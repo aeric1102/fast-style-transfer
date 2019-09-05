@@ -103,3 +103,11 @@ ENV/
 
 # checkpoint
 checkpoint
+
+
+data/*
+image_generator/ckpt_models/
+image_generator/result/
+new_model_transformer/data/
+new_model_transformer/ckpt_models/
+new_model_transformer/pb_models/

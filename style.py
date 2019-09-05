@@ -1,7 +1,7 @@
 from __future__ import print_function
 import sys, os, pdb
 sys.path.insert(0, 'src')
-import numpy as np, scipy.misc 
+import numpy as np
 from optimize import optimize
 from argparse import ArgumentParser
 from utils import save_img, get_img, exists, list_files
@@ -19,7 +19,7 @@ VGG_PATH = 'data/imagenet-vgg-verydeep-19.mat'
 TRAIN_PATH = 'data/train2014'
 BATCH_SIZE = 4
 DEVICE = '/gpu:0'
-FRAC_GPU = 1
+FRAC_GPU = 1.
 
 def build_parser():
     parser = ArgumentParser()
@@ -84,6 +84,10 @@ def build_parser():
                         dest='learning_rate',
                         help='learning rate (default %(default)s)',
                         metavar='LEARNING_RATE', default=LEARNING_RATE)
+    parser.add_argument('--gpu-fraction', type=float,
+                        dest='gpu_fraction',
+                        help='gpu memory fraction (default %(default)s)',
+                        metavar='FRAC_GPU', default=FRAC_GPU)
 
     return parser
 
@@ -112,6 +116,11 @@ def _get_files(img_dir):
 def main():
     parser = build_parser()
     options = parser.parse_args()
+    if not os.path.exists(options.test_dir):
+        os.mkdir(options.test_dir)
+    if not os.path.exists(options.checkpoint_dir):
+        os.mkdir(options.checkpoint_dir)
+    
     check_opts(options)
 
     style_target = get_img(options.style)
@@ -126,7 +135,8 @@ def main():
         "print_iterations":options.checkpoint_iterations,
         "batch_size":options.batch_size,
         "save_path":os.path.join(options.checkpoint_dir,'fns.ckpt'),
-        "learning_rate":options.learning_rate
+        "learning_rate":options.learning_rate,
+        "gpu_fraction": options.gpu_fraction
     }
 
     if options.slow:

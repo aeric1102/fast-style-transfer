@@ -1,0 +1,30 @@
+python style.py --style ./data/style/wave.jpg ^
+  --checkpoint-dir ./data/models/wave ^
+  --test ./data/test/test.jpg ^
+  --test-dir data/test/wave ^
+  --batch-size 4 ^
+  --gpu-fraction 0.3
+
+
+
+python style.py --style ./data/style/timon.jpg \
+  --checkpoint-dir ./data/sm_models/timon \
+  --test ./data/sm_test/test.jpg \
+  --test-dir data/sm_test/timon \
+  --batch-size 4 \
+  --gpu-fraction 0.5
+
+van_gogh
+picasso
+patrick
+timon
+alexander
+markus
+artists_garden
+cafe_terrace
+mona_lisa
+
+liberty_lading
+evie
+
+gustavo
